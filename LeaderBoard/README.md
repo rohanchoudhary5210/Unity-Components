@@ -268,6 +268,159 @@ Possible extensions:
 * Top-100 pagination
 
 ---
+## Configuration (Adapting the Leaderboard to Your Database)
+
+The leaderboard reads player data from the Firebase Realtime Database.
+If your database structure is different, update the following parts of the code.
+
+---
+
+## 1. Database Node Name
+
+Current code reads from the `users` node.
+
+```csharp
+FirebaseDatabase.DefaultInstance
+    .GetReference("users")
+```
+
+Example database structure:
+
+```
+users
+   uid1
+      username: "alex"
+      score: 1200
+```
+
+If your database uses a different node name (for example `players`), change the reference:
+
+```csharp
+.GetReference("players")
+```
+
+---
+
+## 2. Score Field Name
+
+The leaderboard sorts players using the `score` field.
+
+```csharp
+.OrderByChild("score")
+```
+
+If your database stores scores under a different field name (e.g. `highscore`), update this line:
+
+```csharp
+.OrderByChild("highscore")
+```
+
+Database example:
+
+```
+players
+   uid
+      username: "alex"
+      highscore: 1500
+```
+
+---
+
+## 3. Username Field Name
+
+The username is read using:
+
+```csharp
+snap.Child("username").Value.ToString();
+```
+
+If your database uses another field (for example `name`), update this line:
+
+```csharp
+snap.Child("name").Value.ToString();
+```
+
+---
+
+## 4. Score Value Parsing
+
+The score is currently read like this:
+
+```csharp
+int score = int.Parse(
+    snap.Child("score").Value.ToString()
+);
+```
+
+If your field name changes, update it here as well.
+
+---
+
+## 5. Leaderboard Size (Top N Players)
+
+The number of leaderboard entries is controlled here:
+
+```csharp
+.LimitToLast(10)
+```
+
+Examples:
+
+```
+10 → Top 10 leaderboard
+50 → Top 50 leaderboard
+100 → Top 100 leaderboard
+```
+
+Modify according to your UI requirements.
+
+---
+
+## 6. Database Path for User Updates
+
+When updating scores, the database path must match your structure.
+
+Example:
+
+```csharp
+FirebaseDatabase.DefaultInstance
+    .GetReference("users")
+    .Child(uid)
+    .Child("score")
+```
+
+If your database structure changes, update the path accordingly.
+
+Example alternative structure:
+
+```
+players
+   uid
+      stats
+         score: 2000
+```
+
+Code change:
+
+```csharp
+.GetReference("players")
+.Child(uid)
+.Child("stats")
+.Child("score")
+```
+
+---
+
+## Summary
+
+To adapt the leaderboard for another project, you typically only need to modify:
+
+* Database node name (`users`)
+* Score field (`score`)
+* Username field (`username`)
+* Leaderboard size (`LimitToLast`)
+* Database update path
+
 
 # Summary
 
