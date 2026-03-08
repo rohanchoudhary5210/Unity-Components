@@ -1,0 +1,16 @@
+using TMPro;
+using UnityEngine;
+
+public class PlayerBox : MonoBehaviour
+{
+    public TextMeshProUGUI usernameText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI rankText;
+
+    public void SetData(string username, int score, int rank)
+    {
+        usernameText.text = username;
+        scoreText.text = score.ToString();
+        rankText.text = rank.ToString();
+    }
+}
