@@ -123,9 +123,9 @@ Child Control Height: Enabled
 Child Force Expand Width: Enabled
 Child Force Expand Height: Disabled
 Padding Top & Bottom Required (Check Image)
-<img width="304" height="332" alt="image" src="https://github.com/user-attachments/assets/6a65ee68-c560-4492-ba17-b0beb7d18e02" />
 
 ```
+<img width="304" height="332" alt="image" src="https://github.com/user-attachments/assets/6a65ee68-c560-4492-ba17-b0beb7d18e02" />
 
 Purpose:
 
